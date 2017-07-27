@@ -17,6 +17,7 @@
     "redis": "^2.7.1",
     "reltime": "0.0.2",
     "require-reload": "^0.2.2",
+    "safe-eval": "^0.3.0",
     "watch": "^1.0.2"
   }
 }
