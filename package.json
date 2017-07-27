@@ -1,0 +1,21 @@
+{
+  "name": "sekertera",
+  "description": "A sekertera that does magic",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yousef Sultan",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.16.1",
+    "colors": "^1.1.2",
+    "discord.js": "^11.1.0",
+    "dotenv": "^4.0.0",
+    "node-opus": "^0.2.6",
+    "redis": "^2.7.1",
+    "reltime": "0.0.2",
+    "require-reload": "^0.2.2",
+    "watch": "^1.0.2"
+  }
+}
