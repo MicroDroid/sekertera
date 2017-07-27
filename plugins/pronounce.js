@@ -11,7 +11,7 @@ module.exports = {
         if (!lang) {
             message.channel.send('Add a language for the pronunciation');  
         } if (!sentence) {
-            message.channel.send('Add a sentence to pronounce is required');
+            message.channel.send('Add a sentence to pronounce');
             return;
         }
             
