@@ -4,14 +4,18 @@ module.exports = {
     description: "Echo the pronunciation of a word",
     
     handle: message => {
-        const sentence = message.content.substr(message.content.indexOf(' ')+1);
+        const args = message.content.substr(message.content.indexOf(' ')+1);
+        const lang = args.substr(0, args.indexOf(' '));
+        const sentence = args.substr(args.indexOf(' ')+1);
         
-        if (!sentence) {
+        if (!lang) {
+            message.channel.send('Add a language for the pronunciation');  
+        } if (!sentence) {
             message.channel.send('Add a sentence to pronounce is required');
             return;
         }
             
-        googleTTS(sentence, 'en', 1)
+        googleTTS(sentence, lang, 1)
             .then(url => {
 				if (message.member.voiceChannel)
 					message.member.voiceChannel.join()
