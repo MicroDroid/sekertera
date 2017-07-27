@@ -4,7 +4,7 @@ module.exports = {
     description: "Echo the pronunciation of a word",
     
     handle: message => {
-        const sentence = message.content.split(' ')[1];
+        const sentence = message.content.substr(message.content.indexOf(' ')+1);
         
         if (!sentence) {
             message.channel.send('Add a sentence to pronounce is required');

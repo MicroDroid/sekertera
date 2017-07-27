@@ -5,7 +5,7 @@ module.exports = {
 	description: 'Evaluate stuff',
 
 	handle: (message, datastore, bot) => {
-        const expression = message.content.split(' ')[1];
+        const expression = message.content.substr(message.content.indexOf(' ')+1);
 		var result;
 
 		try {
