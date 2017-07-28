@@ -11,7 +11,7 @@ module.exports = {
 		try {
 			result = safeEval(expression, {
 				env: process.env,
-				bot, datastore
+				bot, datastore, message
 			});
 		} catch (e) {
 			result = e;
