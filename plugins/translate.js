@@ -1,4 +1,5 @@
 const axios = require('axios');
+const Parser = require('../parser');
 const Logger = require('../logger');
 
 module.exports = {
@@ -16,27 +17,26 @@ module.exports = {
         }
             
             
-        const args = message.content.substr(message.content.indexOf(' ')+1);
-        const lang = args.substr(0, args.indexOf(' '));
-        const sentence = args.substr(args.indexOf(' ')+1);
+        const parsed = Parser.parse(message.content);
         
-        if (!lang) {
-            message.channel.send('Add a language for the translation direction');  
-        } if (!sentence) {
-            message.channel.send('Add a sentence to translate');
+        if (!parsed.argWords[0]) {
+            message.channel.send(`What do I translate?`);
+            return;
+        } if (!parsed.argWords[1]) {
+            message.channel.send(`Ok I'll translate to ${parsed.argWords[0]}, but what?`);
             return;
         }
             
         axios.get('https://translate.yandex.net/api/v1.5/tr.json/translate?key='
                     + process.env.YANDEX_API_KEY
                     + '&text='
-                    + encodeURIComponent(sentence)
+                    + encodeURIComponent(parsed.argWords[0])
                     + '&lang='
-                    + encodeURIComponent(lang))
+                    + encodeURIComponent(parsed.args.substring(parsed.args.indexOf(' ')+1)))
             .then(response => {
 				message.channel.send(response.data.text.reduce((p, c) => p + ', ' + c, '').substr(2));
             }).catch(e => {
-                message.channel.send('An error occurred!');
+                message.react('❌');
             });
     }
 }

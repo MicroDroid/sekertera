@@ -1,5 +1,6 @@
 const axios = require('axios');
 const Logger = require('../logger');
+const Parser = require('../parser');
 const DomParser = require('dom-parser');
 
 wa = {
@@ -18,15 +19,15 @@ wa = {
             return;
         }
             
-        const expression = message.content.substr(message.content.indexOf(' ')+1);
+        const parsed = Parser.parse(message.content);
         
-        if (!expression) {
+        if (!parsed.args) {
             message.channel.send('Add some data to query');
             return;
         }
         
         axios.get('https://api.wolframalpha.com/v2/query?input=' 
-                    + encodeURIComponent(expression) 
+                    + encodeURIComponent(parsed.args) 
                     + '&appid='
                     + encodeURIComponent(process.env.WOLFRAM_API_KEY))
             .then(data => {

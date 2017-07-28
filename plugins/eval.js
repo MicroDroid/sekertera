@@ -1,15 +1,16 @@
 const safeEval = require('safe-eval');
+const Parser = require('../parser');
 
 module.exports = {
 	adminOnly: true,
 	description: 'Evaluate stuff',
 
 	handle: (message, datastore, bot) => {
-        const expression = message.content.substr(message.content.indexOf(' ')+1);
+		const parsed = Parser.parse(message.content);
 		var result;
 
 		try {
-			result = safeEval(expression, {
+			result = safeEval(parsed.args, {
 				env: process.env,
 				bot, datastore, message
 			});

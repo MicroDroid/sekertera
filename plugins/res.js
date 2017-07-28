@@ -44,14 +44,20 @@ module.exports = {
                             keys: ['text'],
                         });
                         
-                        const results = fuse.search(parsed.args.substr(parsed.args.indexOf(' ')+1)).slice(0, 3);
+                        const results = fuse.search(parsed.args.substr(parsed.args.indexOf(' ')+1));
                         
                         if (results.length < 1)
                             message.react('🤷🏻');
+                        
+                        let result = `${results.length} results:\n`;
                             
+                        for (let i = 0; i < results.length && i < 3; i++)
+                            result += `\n\`${results[i].id}\` - ${results[i].text}`;
                             
-                        for (let i = 0; i < results.length; i++)
-                            message.channel.send(`\`${results[i].id}\` - ${results[i].text}`);
+                        if (results.length >= 3)
+                            result += '\n*...*';
+                            
+                        message.channel.send(result);
                     }).catch(e => {
                         message.react('❌');
                     });
@@ -59,6 +65,7 @@ module.exports = {
             case 'delete':
                 datastore.get('resources')
                     .then(resources => {
+                        resources = resources ? resources : [];
                         const resource = resources.filter(r => r.id === parsed.argWords[1])[0];
                         if (!resource)
                             message.react('🤷🏻');
@@ -77,6 +84,7 @@ module.exports = {
             case 'list':
                 datastore.get('resources')
                     .then(resources => {
+                        resources = resources ? resources : [];
                         let result = `There are ${resources.length} resources:\n`;
                         for (let i = 0; i < resources.length && i < 10; i++)
                             result += `\n\`${resources[i].id}\` - ${resources[i].text}`;

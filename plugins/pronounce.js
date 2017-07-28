@@ -1,21 +1,20 @@
-var googleTTS = require('google-tts-api');
+const googleTTS = require('google-tts-api');
+const Parser = require('../parser');
 
 module.exports = {
     description: "Echo the pronunciation of a word",
     
     handle: message => {
-        const args = message.content.substr(message.content.indexOf(' ')+1);
-        const lang = args.substr(0, args.indexOf(' '));
-        const sentence = args.substr(args.indexOf(' ')+1);
+        const parsed = Parser.parse(message.content);
         
-        if (!lang) {
-            message.channel.send('Add a language for the pronunciation');  
-        } if (!sentence) {
-            message.channel.send('Add a sentence to pronounce');
+        if (!parsed.argWords[0]) {
+            message.channel.send('laaalalaaaaa! Like it!?');  
+        } if (!parsed.argWords[1]) {
+            message.channel.send(`I'll pronounce with language ${parsed.argWords[0].substring(0, 16)}, but what do I?`);
             return;
         }
             
-        googleTTS(sentence, lang, 1)
+        googleTTS(parsed.argWords[0], parsed.args.substring(parsed.args.indexOf(' ')+1), 1)
             .then(url => {
 				if (message.member.voiceChannel)
 					message.member.voiceChannel.join()
@@ -27,7 +26,7 @@ module.exports = {
 						});
 				else message.channel.send(url);
             }).catch(e => {
-                message.channel.send('An error occurred!');
+                message.react('❌');
             });
     }
 }
