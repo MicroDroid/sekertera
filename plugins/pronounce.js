@@ -13,8 +13,10 @@ module.exports = {
             message.channel.send(`I'll pronounce with language ${parsed.argWords[0].substring(0, 16)}, but what do I?`);
             return;
         }
+        
+        console.log(parsed.argWords[0])
             
-        googleTTS(parsed.argWords[0], parsed.args.substring(parsed.args.indexOf(' ')+1), 1)
+        googleTTS(parsed.args.substring(parsed.args.indexOf(' ')+1), parsed.argWords[0], 1)
             .then(url => {
 				if (message.member.voiceChannel)
 					message.member.voiceChannel.join()

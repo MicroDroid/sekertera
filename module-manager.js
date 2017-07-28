@@ -6,15 +6,15 @@ let modules = {
 };
 
 function generateHelp() {
-    var help = '```Sekertera is a hot babe that can do stuff.\n\n';
+    var help = '```yaml\nSekertera is a sekertera that can do magic\n\n';
 
-    help += 'User commands:';
+    help += 'User commands';
 
     for (let key in modules)
       if (modules.hasOwnProperty(key) && !modules[key].adminOnly)
         help += '\n  ' + key + (modules[key].description ? ': ' + modules[key].description : '');
 
-    help += '\n\nAdmin commands:';
+    help += '\n\nAdmin commands';
 
     for (let key in modules)
       if (modules.hasOwnProperty(key) && modules[key].adminOnly)
