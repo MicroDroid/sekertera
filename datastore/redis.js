@@ -28,14 +28,14 @@ module.exports = {
 			client.get(key, (err, result) => {
 				if (err)
 					reject(err);
-				else resolve(result);
+				else resolve(JSON.parse(result));
 			});
 		});
 	},
 
 	set: (key, value) => {
 		return new Promise((resolve, reject) => {
-			client.set(key, value, (err) => {
+			client.set(key, JSON.stringify(value), (err) => {
 				if (err)
 					reject(err);
 				else resolve();
