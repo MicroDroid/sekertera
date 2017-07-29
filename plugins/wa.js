@@ -2,6 +2,7 @@ const axios = require('axios');
 const Logger = require('../logger');
 const Parser = require('../parser');
 const DomParser = require('dom-parser');
+const HtmlToText = require('html-to-text');
 
 wa = {
     description: "Query some arbitrary data",
@@ -32,11 +33,19 @@ wa = {
                     + encodeURIComponent(process.env.WOLFRAM_API_KEY))
             .then(data => {
                 const parsed = wa.parser.parseFromString(data.data);
-                const result = parsed.getElementsByTagName('plaintext')
-                    .slice(0, 3)
-                    .map(e => e.innerHTML)
-                    .reduce((p, c) => p + '\n' + c, '');
-                message.channel.send('```' + result + '\n```');
+                let result = parsed.getElementsByTagName('img');
+                
+                if (result.length > 1)
+                    result = HtmlToText.fromString(result[1].getAttribute('src'));
+                else
+                    result = '```\n'
+                        + parsed.getElementsByTagName('plaintext')
+                            .slice(0, 3)
+                            .map(e => e.innerHTML)
+                            .join('\n')
+                        + '\n```';
+                            
+                message.channel.send(result);
             }).catch(error => {
                 message.channel.send('An error occurred');
                 throw error;
