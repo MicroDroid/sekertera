@@ -13,6 +13,7 @@
     "discord.js": "^11.1.0",
     "dom-parser": "^0.1.5",
     "dotenv": "^4.0.0",
+    "fuse.js": "^3.0.5",
     "google-tts-api": "0.0.1",
     "html-to-text": "^3.3.0",
     "node-opus": "^0.2.6",
