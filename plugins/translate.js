@@ -29,9 +29,9 @@ module.exports = {
             
         axios.get('https://translate.yandex.net/api/v1.5/tr.json/translate?key='
                     + process.env.YANDEX_API_KEY
-                    + '&text='
-                    + encodeURIComponent(parsed.argWords[0])
                     + '&lang='
+                    + encodeURIComponent(parsed.argWords[0])
+                    + '&text='
                     + encodeURIComponent(parsed.args.substring(parsed.args.indexOf(' ')+1)))
             .then(response => {
 				message.channel.send(response.data.text.reduce((p, c) => p + ', ' + c, '').substr(2));
