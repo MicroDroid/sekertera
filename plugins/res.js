@@ -3,7 +3,6 @@ const Parser = require('../parser');
 
 module.exports = {
     description: "An index of resources",
-    adminOnly: true,
     
     onCreate: (datastore, bot) => {
         bot.on('message', message => {
